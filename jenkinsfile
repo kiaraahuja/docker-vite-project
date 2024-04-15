@@ -1,0 +1,21 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                // Checkout the code from Git repository
+                git 'https://github.com/kiaraahuja/docker-vite-project.git'
+
+                // Build the Docker image
+                sh 'docker build -t sample-react-vite-app-image .'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                // Run the Docker container
+                sh 'docker run -d -p 3000:3000 --name sample-react-vite-app-container sample-react-vite-app-image'
+            }
+        }
+    }
+}
