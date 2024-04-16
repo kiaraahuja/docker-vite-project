@@ -2,8 +2,8 @@ pipeline {
     agent any
     tools { nodejs 'node' }
     environment{
-        imageName = 'techwithjio/react-vite-app'
-        registryCredential = 'techwithjio'
+        imageName = 'kiaraahuja/react-vite-app'
+        registryCredential = 'kiaraahuja'
         dockerImage = ''
     }
     stages {
