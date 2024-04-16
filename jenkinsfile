@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 // Checkout the code from Git repository
-                git 'https://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@github.com/kiaraahuja/docker-vite-project.git'
+                git 'https://github.com/kiaraahuja/docker-vite-project.git'
 
                 // Build the Docker image
                 sh 'docker build -t sample-react-vite-app-image .'
