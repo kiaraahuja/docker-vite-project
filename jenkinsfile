@@ -2,19 +2,29 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
+        stage('Checkout') {
             steps {
-                // Checkout the code from Git repository
-                git 'https://github.com/kiaraahuja/docker-vite-project.git'
-
-                // Build the Docker image
-                sh 'docker build -t sample-react-vite-app-image .'
+                checkout scm
             }
         }
-        stage('Deploy') {
+        stage('Build') {
             steps {
-                // Run the Docker container
-                sh 'docker run -d -p 3000:3000 --name sample-react-vite-app-container sample-react-vite-app-image'
+                sh 'npm install'
+                sh 'npm run build'
+            }
+        }
+        stage('Docker Build') {
+            steps {
+                sh 'docker build -t my-vite-react-app .'
+            }
+        }
+        stage('Docker Push') {
+            steps {
+                withCredentials([string(credentialsId: 'dockerHub', variable: 'dh')]) {
+                    sh 'docker tag my-vite-react-app:latest my-docker-hub-username/my-vite-react-app:latest'
+                    sh 'docker login -u my-docker-hub-username -p $dh'
+                    sh 'docker push my-docker-hub-username/my-vite-react-app:latest'
+                }
             }
         }
     }
