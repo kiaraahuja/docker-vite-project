@@ -1,4 +1,9 @@
 pipeline {
+    tools {
+        nodejs 'NodeJS 18.18.2'
+        jdk 'JDK17-linux'
+        'dependency-check' '8.4.0'
+    }
     agent any
 
     stages {
@@ -7,22 +12,14 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Build') {
-            steps {
-                sh 'npm install'
-                sh 'npm run build'
-            }
-        }
         stage('Docker Build') {
             steps {
-                sh 'docker build -t my-vite-react-app .'
+                sh 'docker build -f Dockerfile -t my-vite-react-app .'
             }
         }
         stage('Docker Push') {
             steps {
                 withCredentials([string(credentialsId: 'dockerHub', variable: 'dh')]) {
-                    sh 'docker tag my-vite-react-app:latest my-docker-hub-username/my-vite-react-app:latest'
-                    sh 'docker login -u my-docker-hub-username -p $dh'
                     sh 'docker push my-docker-hub-username/my-vite-react-app:latest'
                 }
             }
