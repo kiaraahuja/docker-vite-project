@@ -9,13 +9,13 @@ pipeline {
         }
         stage('Docker Build') {
             steps {
-                sh 'docker build -f Dockerfile -t my-vite-react-app .'
+                sh 'sudo docker build -f Dockerfile -t my-vite-react-app .'
             }
         }
         stage('Docker Push') {
             steps {
                 withCredentials([string(credentialsId: 'dockerHub', variable: 'dh')]) {
-                    sh 'docker push my-docker-hub-username/my-vite-react-app:latest'
+                    sh 'sudo docker push my-docker-hub-username/my-vite-react-app:latest'
                 }
             }
         }
