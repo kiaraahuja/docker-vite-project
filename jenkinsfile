@@ -2,14 +2,9 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
+        stage('Install dependencies') {
             steps {
-                checkout scm
-            }
-        }
-        stage('Docker Build') {
-            steps {
-                sh 'docker build -f Dockerfile -t my-vite-react-app .'
+                sh 'npm install'
             }
         }
     }
