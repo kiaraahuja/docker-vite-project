@@ -1,9 +1,4 @@
 pipeline {
-    tools {
-        nodejs 'NodeJS 18.18.2'
-        jdk 'JDK17-linux'
-        'dependency-check' '8.4.0'
-    }
     agent any
 
     stages {
