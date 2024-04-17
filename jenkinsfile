@@ -19,12 +19,19 @@ pipeline {
                 }
             }
         }
-        stage('Deploy Image'){
+        stage('Docker login'){
             steps{
                 script{
                     docker.withRegistry("https://registry.hub.docker.com",'dockerhub-creds'){
                         dockerImage.push("${env.BUILD_NUMBER}")
                     }
+                }
+            }
+        }
+        stage('Deploy App'){
+            steps{
+                script{
+                    sh """docker run -d -p 3000:3000 --name react-vite-app --rm  $imageName"""
                 }
             }
         }
