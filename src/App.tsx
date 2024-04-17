@@ -5,7 +5,8 @@ import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
-
+  const apiKey = process.env.REACT_APP_API_KEY;
+  const apiUrl = process.env.REACT_APP_API_URL;
   return (
     <>
       <div>
@@ -20,6 +21,8 @@ function App() {
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
+          apiKey is {apiKey}
+          apiUrl is {apiUrl}
         </button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
